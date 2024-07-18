@@ -41,23 +41,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img
+        <h1>Cassoulet</h1>
+        {/* <img
           src={logo}
           className="App-logo"
           alt="logo"
           style={{ transform: `rotate(${rotation}deg)` }}
-        />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://dust-tt.notion.site/Solutions-Engineer-2c09ccd826e641e68c3d5886ae25777f"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        /> */}
       </header>
     </div>
   );

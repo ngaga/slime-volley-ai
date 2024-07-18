@@ -2,25 +2,14 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 2%;
-  pointer-events: all;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 19s linear;
-  }
-}
-
 .App-header {
-  background-color: darkyellow;
+  background-color: #282c34;
   min-height: 50vh;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: column-reverse;
+  align-items: center;
   justify-content: center;
   font-size: 10;
-  color: white;
+  color: pink;
 }
 
