@@ -41,13 +41,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Cassoulet</h1>
-        {/* <img
-          src={logo}
-          className="App-logo"
-          alt="logo"
-          style={{ transform: `rotate(${rotation}deg)` }}
-        /> */}
+        <h1 style={{ transform: `rotate(${rotation}deg)` }}>
+          Cassoulet
+        </h1>
       </header>
     </div>
   );
