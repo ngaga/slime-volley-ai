@@ -2,10 +2,21 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+function useRotation(angularSpeed) {
   const [rotation, setRotation] = useState(0);
-  const [angularSpeed, setAngularSpeed] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation((prevRotation) => prevRotation + angularSpeed);
+    }, 16); // Approximately 60 frames per second
+
+    return () => clearInterval(interval);
+  }, [angularSpeed]);
+
+  return rotation;
+}
+
+function useKeyControls(setAngularSpeed) {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'ArrowLeft') {
@@ -28,15 +39,14 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, []);
+  }, [setAngularSpeed]);
+}
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prevRotation) => prevRotation + angularSpeed);
-    }, 16); // Approximately 60 frames per second
+function App() {
+  const [angularSpeed, setAngularSpeed] = useState(0);
+  const rotation = useRotation(angularSpeed);
 
-    return () => clearInterval(interval);
-  }, [angularSpeed]);
+  useKeyControls(setAngularSpeed);
 
   return (
     <div className="App">
