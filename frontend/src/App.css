@@ -5,8 +5,7 @@
 
 .App-header {
   background-color: goldenrod;
-  display: list-item;
-  flex-direction: column-reverse;
+  display: flex;
   align-items: center;
   justify-content: center;
   color: pink;
