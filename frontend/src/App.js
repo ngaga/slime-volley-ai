@@ -1,68 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function useRotation(angularSpeed) {
-  const [rotation, setRotation] = useState(0);
+interface Player {
+  x: number;
+  y: number;
+}
+
+const GameComponent: React.FC = () => {
+  const [ball, setBall] = useState({ x: 50, y: 50 });
+  const [player1, setPlayer1] = useState<Player>({ x: 20, y: 50 });
+  const [player2, setPlayer2] = useState<Player>({ x: 80, y: 50 });
+  const [dx, setDx] = useState(2);
+  const [dy, setDy] = useState(2);
+
+  const tick = () => {
+    let newBallX = ball.x + dx;
+    let newBallY = ball.y + dy;
+
+    // Collision detection for the walls
+    if (newBallX >= 100 || newBallX <= 0) setDx(-dx);
+    if (newBallY >= 100 || newBallY <= 0) setDy(-dy);
+
+    // Collision detection for players
+    if (newBallX < 25 && Math.abs(newBallY - player1.y) < 10) setDx(-dx);
+    if (newBallX > 75 && Math.abs(newBallY - player2.y) < 10) setDx(-dx);
+
+    setBall({ x: newBallX, y: newBallY });
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prevRotation) => prevRotation + angularSpeed);
-    }, 16); // Approximately 60 frames per second
-
+    const interval = setInterval(tick, 50);
     return () => clearInterval(interval);
-  }, [angularSpeed]);
-
-  return rotation;
-}
-
-function useKeyControls(setAngularSpeed) {
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'ArrowLeft') {
-        setAngularSpeed(1); // Positive angular speed
-      } else if (event.key === 'ArrowRight') {
-        setAngularSpeed(-1); // Negative angular speed
-      }
-    };
-
-    const handleKeyUp = (event) => {
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        setAngularSpeed(0); // Stop rotation
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [setAngularSpeed]);
-}
-
-function App() {
-  const [angularSpeed, setAngularSpeed] = useState(0);
-  const rotation = useRotation(angularSpeed);
-
-  useKeyControls(setAngularSpeed);
+  }, [ball, dx, dy]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* <h1 style={{ transform: `rotate(${rotation}deg)` }}>
-          Cassoulet
-        </h1> */}
-        <img 
-          src={logo} 
-          className="App-logo" 
-          alt="logo" 
-          // style={{ transform: `rotate(${rotation}deg)` }} 
-          />
-      </header>
-    </div>
+    <svg width="100vw" height="100vh" style={{ background: 'lightblue' }}>
+      <circle cx={`${player1.x}%`} cy={`${player1.y}%`} r="5%" fill="red" />
+      <circle cx={`${player2.x}%`} cy={`${player2.y}%`} r="5%" fill="blue" />
+      <circle cx={`${ball.x}%`} cy={`${ball.y}%`} r="2%" fill="green" />
+    </svg>
   );
-}
+};
 
-export default App;
+export default GameComponent;
